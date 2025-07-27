@@ -2,7 +2,7 @@ import { DATABASE_ID, databases, HABITS_COLLECTION_ID } from "@/lib/appwrite";
 import { useAuth } from "@/lib/auth-context";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
+import { Dimensions, Image, ScrollView, StyleSheet, View } from "react-native";
 import { ID } from "react-native-appwrite";
 import {
   Button,
@@ -63,10 +63,37 @@ export default function AddHabitScreen() {
         contentContainerStyle={styles.scrollContainer}
         showsVerticalScrollIndicator={false}
       >
-        <View style={styles.headerContainer}>
+        {/* Hero Section */}
+        <View style={styles.heroSection}>
+          <Text style={styles.heroTitle}>Ready to Live{'\n'}Healthier?</Text>
           
+          <Card style={styles.heroCard} elevation={8 as any}>
+            <Card.Content style={styles.heroCardContent}>
+              <View style={styles.heroTextSection}>
+                <Text style={styles.heroCardTitle}>Drinking Tracker</Text>
+                <Text style={styles.heroCardSubtitle}>
+                  Stay hydrated, it's{'\n'}nature's best{'\n'}refreshment!
+                </Text>
+                <View style={styles.heroButton}>
+                  <Text style={styles.heroButtonIcon}>→</Text>
+                </View>
+              </View>
+              <View style={styles.heroImageSection}>
+                <View style={styles.girlImageContainer}>
+                  <Image 
+                    source={require('@/assets/images/gym.png')} 
+                    style={styles.girlImage}
+                    resizeMode="contain"
+                  />
+                </View>
+              </View>
+            </Card.Content>
+          </Card>
+        </View>
+
+        <View style={styles.headerContainer}>
           <Text style={styles.headerSubtitle}>
-            Build positive habits that stick
+         Build lasting habits
           </Text>
         </View>
 
@@ -79,15 +106,20 @@ export default function AddHabitScreen() {
                 value={title}
                 onChangeText={setTitle}
                 style={styles.input}
-                outlineColor="rgba(102, 126, 234, 0.3)"
-                activeOutlineColor="#667eea"
+                outlineColor="#404040"
+                activeOutlineColor="#CDFF47"
                 theme={{
                   colors: {
-                    background: '#ffffff',
+                    background: '#2d2d2d',
+                    onSurface: '#fff',
+                    outline: '#404040',
+                    onSurfaceVariant: '#a0a0a0',
                   }
                 }}
-                left={<TextInput.Icon icon="bullseye-arrow" />}
+                textColor="#fff"
+                left={<TextInput.Icon icon="bullseye-arrow" iconColor="#CDFF47" />}
                 placeholder="Enter your habit name..."
+                placeholderTextColor="#6a6a6a"
               />
               
               <TextInput
@@ -98,15 +130,20 @@ export default function AddHabitScreen() {
                 style={styles.descriptionInput}
                 multiline
                 numberOfLines={5}
-                outlineColor="rgba(102, 126, 234, 0.3)"
-                activeOutlineColor="#667eea"
+                outlineColor="#404040"
+                activeOutlineColor="#CDFF47"
                 theme={{
                   colors: {
-                    background: '#ffffff',
+                    background: '#2d2d2d',
+                    onSurface: '#fff',
+                    outline: '#404040',
+                    onSurfaceVariant: '#a0a0a0',
                   }
                 }}
-                left={<TextInput.Icon icon="text" />}
+                textColor="#fff"
+                left={<TextInput.Icon icon="text" iconColor="#CDFF47" />}
                 placeholder="Describe your habit in detail..."
+                placeholderTextColor="#6a6a6a"
               />
             </View>
 
@@ -124,8 +161,9 @@ export default function AddHabitScreen() {
                 style={styles.segmentedButtons}
                 theme={{
                   colors: {
-                    secondaryContainer: '#a2e3f4',
-                    onSecondaryContainer: '#FF0000',
+                    secondaryContainer: '#CDFF47',
+                    onSecondaryContainer: '#1a1a1a',
+                    outline: '#404040',
                   }
                 }}
               />
@@ -141,7 +179,8 @@ export default function AddHabitScreen() {
               ]}
               contentStyle={styles.buttonContent}
               labelStyle={styles.buttonLabel}
-              buttonColor="#98e322"
+              buttonColor="#CDFF47"
+              textColor="#1a1a1a"
               icon="plus"
             >
               Create Habit
@@ -164,7 +203,7 @@ export default function AddHabitScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#efefef',
+    backgroundColor: '#1a1a1a',
   },
   
   scrollContainer: {
@@ -174,36 +213,133 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
 
-  headerContainer: {
+  // Hero Section Styles
+  heroSection: {
+    marginBottom: 12,
+  },
+
+  heroTitle: {
+    fontSize: 32,
+    fontWeight: '700',
+    color: '#fff',
+    marginBottom: 20,
+    lineHeight: 38,
+  },
+
+  heroCard: {
+    borderRadius: 20,
+    backgroundColor: '#CDFF47',
+    shadowColor: '#CDFF47',
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 16,
+    elevation: 12,
+    overflow: 'visible',
+    position: 'relative',
+  },
+
+  heroCardContent: {
+    padding: 20,
+    flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 30,
+    justifyContent: 'space-between',
+    minHeight: 140,
+  },
+
+  heroTextSection: {
+    flex: 1,
+    paddingRight: 16,
+  },
+
+  heroCardTitle: {
+    fontSize: 20,
+    fontWeight: '800',
+    color: '#1a1a1a',
+    marginBottom: 8,
+    lineHeight: 20,
+  },
+
+  heroCardSubtitle: {
+    fontSize: 16,
+    color: '#2d2d2d',
+    marginBottom: 20,
+    lineHeight: 22,
+    fontWeight: '500',
+  },
+
+  heroButton: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+
+  heroButtonIcon: {
+    fontSize: 20,
+    color: '#1a1a1a',
+    fontWeight: '600',
+  },
+
+  heroImageSection: {
+    position: 'relative',
+    width: 0,
+    height: 0,
+  },
+
+  girlImageContainer: {
+    position: 'absolute',
+    bottom: -151,
+    right: -24,
+    width: 180,
+    height: 280,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+
+  girlImage: {
+    width: '100%',
+    height: '100%',
+  },
+
+  headerContainer: {
+    marginBottom: 22,
     paddingHorizontal: 10,
   },
 
-
-
   headerSubtitle: {
-    fontSize: 18,
-    color: '#475569',
-    textAlign: 'center',
-    fontWeight: '500',
-    letterSpacing: 0.5,
-    marginTop:18,
+    fontSize: 28,
+    fontWeight: '700',
+    color: '#fff',
+    lineHeight: 38,
+    marginTop: 0,
   },
 
   formCard: {
-    borderRadius: 10,
-    backgroundColor: '#ffffff',
+    borderRadius: 8,
+    backgroundColor: '#2d2d2d',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 12,
     },
-    shadowOpacity: 0.15,
+    shadowOpacity: 0.3,
     shadowRadius: 24,
     elevation: 12,
     borderWidth: 1,
-    borderColor: 'rgba(102, 126, 234, 0.1)',
+    borderColor: '#CDFF47',
   },
 
   cardContent: {
@@ -211,45 +347,45 @@ const styles = StyleSheet.create({
   },
 
   inputContainer: {
-    marginBottom: 28,
+    marginBottom: 12,
   },
 
   input: {
-    marginBottom: 24,
-    backgroundColor: '#ffffff',
+    marginBottom: 16,
+    backgroundColor: '#2d2d2d',
     fontSize: 16,
   },
 
   descriptionInput: {
-    marginBottom: 10,
-    backgroundColor: '#ffffff',
+    marginBottom: 0,
+    backgroundColor: '#2d2d2d',
     fontSize: 16,
-    minHeight: 120,
+    minHeight: 80,
   },
 
   frequencySection: {
-    marginBottom: 16,
+    marginBottom: 8,
   },
 
   sectionLabel: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#1e293b',
+    color: '#fff',
     marginBottom: 16,
     letterSpacing: 0.3,
   },
 
   segmentedButtons: {
-    backgroundColor: '#a2e3f4',
-    borderRadius: 16,
+    backgroundColor: '#404040',
+    borderRadius: 32,
     borderWidth: 1,
-    borderColor: 'rgba(102, 126, 234, 0.2)',
+    borderColor: '#404040',
   },
 
   submitButton: {
-    borderRadius: 36,
+    borderRadius: 6,
     elevation: 8,
-    shadowColor: '#667eea',
+    shadowColor: '#CDFF47',
     shadowOffset: {
       width: 0,
       height: 6,
@@ -260,13 +396,13 @@ const styles = StyleSheet.create({
   },
 
   disabledButton: {
-    backgroundColor: '#d5eab3',
+    backgroundColor: '#6a6a6a',
     elevation: 0,
     shadowOpacity: 0,
   },
 
   buttonContent: {
-    paddingVertical: 12,
+    paddingVertical: 8,
     paddingHorizontal: 8,
   },
 
@@ -278,10 +414,10 @@ const styles = StyleSheet.create({
 
   errorCard: {
     marginTop: 20,
-    backgroundColor: '#fef2f2',
+    backgroundColor: '#4a1a1a',
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#fecaca',
+    borderColor: '#8b2635',
   },
 
   errorContent: {
@@ -289,7 +425,7 @@ const styles = StyleSheet.create({
   },
 
   errorText: {
-    color: '#dc2626',
+    color: '#ff6b6b',
     fontSize: 15,
     textAlign: 'center',
     fontWeight: '500',
