@@ -1,6 +1,7 @@
 # a Habit Tracker App with React Native & Appwrite
+<img src="/screen.png" width="900">
 
-https://github.com/user-attachments/assets/2d7c04be-a83b-4ba6-92f1-2f433205b3ca
+
 
 <div align="center">
   <br />

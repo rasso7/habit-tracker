@@ -1,5 +1,4 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
 import { Tabs } from "expo-router";
 
 export default function TabsLayout() {
@@ -8,19 +7,28 @@ export default function TabsLayout() {
       screenOptions={{
         headerShown: false, // This removes the header from all tab screens
         tabBarStyle: {
-          backgroundColor: "#f5f5f5",
-          borderTopWidth: 0,
+          backgroundColor: "#1a1a1a",
+          borderTopWidth: 1,
+          borderTopColor: "#CDFF47",
           elevation: 0,
           shadowOpacity: 0,
+          height: 90,
+          paddingBottom: 20,
+          paddingTop: 10,
         },
-        tabBarActiveTintColor: "#6200ee",
-        tabBarInactiveTintColor: "#666666",
+        tabBarActiveTintColor: "#CDFF47",
+        tabBarInactiveTintColor: "#6a6a6a",
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: "600",
+          marginTop: 4,
+        },
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: "Today's Habits",
+          title: "Today",
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="calendar-today"
@@ -70,6 +78,6 @@ export default function TabsLayout() {
         }}
       />
     </Tabs>
-    
+       
   );
 }
