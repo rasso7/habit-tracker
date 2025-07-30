@@ -9,7 +9,7 @@ import {
 import { useAuth } from "@/lib/auth-context";
 import { Habit, HabitCompletion } from "@/types/database.type";
 import { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import { Query } from "react-native-appwrite";
 import { ScrollView } from "react-native-gesture-handler";
 import { Card, Text } from "react-native-paper";
@@ -156,13 +156,64 @@ export default function StreaksScreen() {
   const rankedHabits = habitStreaks.sort((a, b) => b.bestStreak - a.bestStreak);
 
   const badgeStyles = [styles.badge1, styles.badge2, styles.badge3];
+  
   return (
     <View style={styles.container}>
+      {/* Header Section */}
+      <View style={styles.headerSection}>
+        <Text style={styles.headerTitle}>Today's Challenge</Text>
+        <Text style={styles.seeAllText}>See All</Text>
+      </View>
+      
+      {/* Hero Card Section */}
+      <View style={styles.heroSection}>
+        <Card style={styles.heroCard} elevation={8 as any}>
+          <Card.Content style={styles.heroCardContent}>
+            <View style={styles.heroTextSection}>
+              <Text style={styles.heroCardTitle}>Daily {'\n'}Challenge</Text>
+              <Text style={styles.heroCardSubtitle}>
+                Do your plan before 09:00 AM
+              </Text>
+              
+              {/* User Icons Section */}
+              <View style={styles.userIconsContainer}>
+                <View style={styles.userIconsRow}>
+                  <Image 
+                    source={require('@/assets/images/icon4.png')} 
+                    style={styles.userIcon}
+                  />
+                  <Image 
+                    source={require('@/assets/images/icon3.jpeg')} 
+                    style={[styles.userIcon, styles.userIconOverlap]}
+                  />
+                  <Image 
+                    source={require('@/assets/images/icon2.jpg')} 
+                    style={[styles.userIcon, styles.userIconOverlap]}
+                  />
+                  <View style={[styles.userIcon, styles.userIconOverlap, styles.userIconCount]}>
+                    <Text style={styles.userIconCountText}>+4</Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+            <View style={styles.heroImageSection}>
+              <View style={styles.girlImageContainer}>
+                <Image 
+                  source={require('@/assets/images/gym.png')} 
+                  style={styles.girlImage}
+                  resizeMode="contain"
+                />
+              </View>
+            </View>
+          </Card.Content>
+        </Card>
+      </View>
     
       {rankedHabits.length > 0 && (
         <View style={styles.rankingContainer}>
-          
-          <Text style={styles.rankingTitle}> 🏅 Top Streaks</Text>
+          <Text style={styles.leaderboardTitle}>🏆 Leaderboard</Text>
+          <Text style={styles.leaderboardDescription}>Your top performing habits ranked by best streak</Text>
+          <Text style={styles.rankingTitle}> Top Streaks</Text>
           {rankedHabits.slice(0, 3).map((item, key) => (
             <View key={key} style={styles.rankingRow}>
               <View style={[styles.rankingBadge, badgeStyles[key]]}>
@@ -174,15 +225,18 @@ export default function StreaksScreen() {
           ))}
         </View>
       )}
-
+       <View style={styles.subSection}>
+        <Text style={styles.subTitle}>Daily Habit</Text>
+        <Text style={styles.subseeAllText}>See All</Text>
+      </View>
       {habits.length === 0 ? (
-        <View>
-          <Text> No Habits yet. Add your first Habit!</Text>
+        <View style={styles.emptyState}>
+          <Text style={styles.emptyStateText}> No Habits yet. Add your first Habit!</Text>
         </View>
       ) : (
         <ScrollView
           showsVerticalScrollIndicator={false}
-          style={styles.container}
+          style={styles.scrollContainer}
         >
           {rankedHabits.map(({ habit, streak, bestStreak, total }, key) => (
             <Card
@@ -224,34 +278,193 @@ export default function StreaksScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#1a1a1a",
+  },
+  
+  // Header Styles
+  headerSection: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginHorizontal: 18,
+    marginTop: 36,
+    marginBottom: 8,
+  },
+
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: "700",
+    color: "#fff",
+    letterSpacing: 0.3,
+  },
+
+  seeAllText: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#CDFF47",
+    letterSpacing: 0.2,
+  },
+  
+  // Hero Card Styles
+  heroSection: {
+    marginHorizontal: 16,
+    marginTop: 10,
+    marginBottom: 20,
+  },
+
+  heroCard: {
+    borderRadius: 20,
+    backgroundColor: "#CDFF47",
+    shadowColor: "#CDFF47",
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 12,
+    elevation: 8,
+    overflow: 'visible',
+    position: 'relative',
+  },
+
+  heroCardContent: {
     padding: 16,
-    marginTop:18,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    minHeight: 100,
+  },
+
+  heroTextSection: {
+    flex: 1,
+    paddingRight: 12,
+  },
+
+  heroCardTitle: {
+    fontSize: 20,
+    fontWeight: "800",
+    color: "#1a1a1a",
+    marginBottom: 8,
+    lineHeight: 24,
+    letterSpacing: 0.5,
+  },
+
+  heroCardSubtitle: {
+    fontSize: 13,
+    color: "#2d2d2d",
+    marginBottom: 16,
+    lineHeight: 18,
+    fontWeight: "500",
+  },
+
+  // User Icons Styles
+  userIconsContainer: {
+    marginBottom: 16,
+  },
+
+  userIconsRow: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+
+  userIcon: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: "#fff",
+    borderWidth: 2,
+    borderColor: "#fff",
+  },
+
+  userIconOverlap: {
+    marginLeft: -8,
+  },
+
+  userIconCount: {
+    backgroundColor: "#2d2d2d",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  userIconCountText: {
+    color: "#CDFF47",
+    fontSize: 11,
+    fontWeight: "bold",
+  },
+
+
+  heroImageSection: {
+    position: "relative",
+    width: 0,
+    height: 0,
+  },
+
+  girlImageContainer: {
+    position: "absolute",
+    bottom: -98,
+    right: -16,
+    width: 155,
+    height: 180,
+    alignItems: "center",
+    justifyContent: "flex-end",
+  },
+
+  girlImage: {
+    width: "100%",
+    height: "100%",
+  },
+
+  scrollContainer: {
+    flex: 1,
+    paddingHorizontal: 16,
   },
   card: {
     marginBottom: 18,
-    borderRadius: 18,
-    backgroundColor: "#fff",
+    borderRadius: 20,
+    backgroundColor: "#2d2d2d",
     elevation: 3,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
+    shadowOpacity: 0.3,
     shadowRadius: 8,
     borderWidth: 1,
-    borderColor: "#f0f0f0",
+    borderColor: "#404040",
   },
   firstCard: {
     borderWidth: 2,
-    borderColor: "#7c4dff",
+    borderColor: "#CDFF47",
   },
   habitTitle: {
     fontWeight: "bold",
     fontSize: 18,
     marginBottom: 2,
+    color: "#fff",
   },
   habitDescription: {
-    color: "#6c6c80",
+    color: "#a0a0a0",
     marginBottom: 8,
+  },
+  subSection: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginHorizontal: 18,
+    marginTop: 0,
+    marginBottom: 8,
+  },
+
+  subTitle: {
+    fontSize: 18,
+    fontWeight: "700",
+    color: "#fff",
+    letterSpacing: 0.3,
+  },
+
+  subseeAllText: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#CDFF47",
+    letterSpacing: 0.2,
   },
   statsRow: {
     flexDirection: "row",
@@ -260,95 +473,131 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   statBadge: {
-    backgroundColor: "#fff3e0",
+    backgroundColor: "#4a2c1a",
     borderRadius: 10,
     paddingHorizontal: 12,
     paddingVertical: 6,
     alignItems: "center",
     minWidth: 60,
+    borderWidth: 1,
+    borderColor: "#8b4513",
   },
   statBadgeGold: {
-    backgroundColor: "#fffde7",
+    backgroundColor: "#4a4a1a",
     borderRadius: 10,
     paddingHorizontal: 12,
     paddingVertical: 6,
     alignItems: "center",
     minWidth: 60,
+    borderWidth: 1,
+    borderColor: "#b8860b",
   },
   statBadgeGreen: {
-    backgroundColor: "#e8f5e9",
+    backgroundColor: "#1a4a2e",
     borderRadius: 10,
     paddingHorizontal: 12,
     paddingVertical: 6,
     alignItems: "center",
     minWidth: 60,
+    borderWidth: 1,
+    borderColor: "#228b22",
   },
   statBadgeText: {
     fontWeight: "bold",
     fontSize: 15,
-    color: "#22223b",
+    color: "#fff",
   },
   statLabel: {
     fontSize: 11,
-    color: "#888",
+    color: "#a0a0a0",
     marginTop: 2,
     fontWeight: "500",
   },
 
   rankingContainer: {
     marginBottom: 24,
-    backgroundColor: "#fff",
-    borderRadius: 16,
-    padding: 16,
+    marginHorizontal: 16,
+    backgroundColor: "#2d2d2d",
+    borderRadius: 20,
+    padding: 20,
     elevation: 2,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
+    shadowOpacity: 0.3,
     shadowRadius: 8,
+    borderWidth: 1,
+    borderColor: "#404040",
+  },
+  leaderboardTitle: {
+    fontWeight: "bold",
+    fontSize: 24,
+    marginBottom: 8,
+    color: "#CDFF47",
+    letterSpacing: 0.5,
+    textAlign: "center",
+  },
+  leaderboardDescription: {
+    fontSize: 14,
+    color: "#a0a0a0",
+    textAlign: "center",
+    marginBottom: 20,
+    lineHeight: 18,
   },
   rankingTitle: {
     fontWeight: "bold",
-    fontSize: 18,
-    marginBottom: 12,
-    color: "#7c4dff",
+    fontSize: 20,
+    marginBottom: 16,
+    color: "#CDFF47",
     letterSpacing: 0.5,
   },
   rankingRow: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 8,
+    marginBottom: 12,
     borderBottomWidth: 1,
-    borderBottomColor: "#f0f0f0",
-    paddingBottom: 8,
+    borderBottomColor: "#404040",
+    paddingBottom: 12,
   },
   rankingBadge: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
     alignItems: "center",
     justifyContent: "center",
-    marginRight: 10,
-    backgroundColor: "#e0e0e0",
+    marginRight: 12,
+    backgroundColor: "#404040",
   },
-  badge1: { backgroundColor: "#ffd700" }, // gold
-  badge2: { backgroundColor: "#c0c0c0" }, // silver
+  badge1: { backgroundColor: "#CDFF47" }, // bright yellow-green
+  badge2: { backgroundColor: "#6b7280" }, // silver
   badge3: { backgroundColor: "#cd7f32" }, // bronze
 
   rankingBadgeText: {
     fontWeight: "bold",
-    color: "#fff",
-    fontSize: 15,
+    color: "#1a1a1a",
+    fontSize: 16,
   },
 
   rankingHabit: {
     flex: 1,
-    fontSize: 15,
-    color: "#333",
+    fontSize: 16,
+    color: "#fff",
     fontWeight: "600",
   },
   rankingStreak: {
-    fontSize: 14,
-    color: "#7c4dff",
+    fontSize: 16,
+    color: "#CDFF47",
     fontWeight: "bold",
+  },
+
+  emptyState: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 60,
+  },
+  emptyStateText: {
+    fontSize: 16,
+    color: "#a0a0a0",
+    textAlign: "center",
   },
 });
